@@ -21,13 +21,13 @@ const listContacts = async () => {
 async function getContactById(contactId) {
   const data = await loadData();
   const contact = data.find((el) => el.id === String(contactId));
-  return contact || null; // generate error
+  return contact || null;
 }
 
 async function removeContact(contactId) {
   const data = await loadData();
   const index = data.findIndex(({ id }) => id === String(contactId));
-  if (index === -1) return null; // generate error
+  if (index === -1) return null;
   const [contact] = data.splice(index, 1);
   await saveData(data);
   return contact;
@@ -48,7 +48,7 @@ const updateContact = async (contactId, body) => {
   const index = data.findIndex((el) => el.id === String(contactId));
   if (index === -1) {
     console.log("No contact");
-    return null; // generate error
+    return null;
   }
   const contact = data[index];
   const updatedContact = { ...contact, ...body };
