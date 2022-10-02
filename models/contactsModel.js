@@ -46,10 +46,7 @@ async function addContact(body) {
 const updateContact = async (contactId, body) => {
   const data = await loadData();
   const index = data.findIndex((el) => el.id === String(contactId));
-  if (index === -1) {
-    console.log("No contact");
-    return null;
-  }
+  if (index === -1) return null;
   const contact = data[index];
   const updatedContact = { ...contact, ...body };
   data[index] = updatedContact;

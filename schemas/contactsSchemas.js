@@ -7,7 +7,6 @@ const addContactSchema = Joi.object({
 }).or("email", "phone");
 
 const updateContactSchema = Joi.object({
-  id: Joi.string().required(),
   name: Joi.string(),
   email: Joi.string().email(),
   phone: Joi.string().pattern(/^[+]?[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/),
