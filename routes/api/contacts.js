@@ -1,66 +1,27 @@
 const {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-} = require("../../models/contacts");
-
-const {
   addContactSchema,
   updateContactSchema,
-} = require("../../schemas/contactSchemas");
+} = require("../../schemas/contactsSchemas");
 
-const createError = require("http-errors");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", async (_, res) => {
-  const data = await listContacts();
-  res.json(data);
-});
+const ctrlContacts = require("../../controllers/contacts");
+const controlWrapper = require("../../helpers/controlWrapper");
+const validate = require("../../middleware/validate");
 
-router.get("/:contactId", async (req, res, next) => {
-  const id = req.params.contactId;
-  const contact = await getContactById(id);
-  if (!contact) {
-    next(createError(404, "Contact not found"));
-    return;
-  }
-  res.json(contact);
-});
+router.get("/", controlWrapper(ctrlContacts.getAll));
 
-router.post("/", async (req, res, next) => {
-  const body = req.query;
-  const { error } = addContactSchema.validate(body);
-  if (error) {
-    next(createError(400, "Bad request"));
-    return;
-  }
-  const contact = await addContact(body);
-  res.json(contact);
-});
+router.get("/:contactId", controlWrapper(ctrlContacts.getById));
 
-router.delete("/:contactId", async (req, res, next) => {
-  const id = req.params.contactId;
-  const contact = await removeContact(id);
-  if (!contact) {
-    next(createError(404, "Contact not found"));
-    return;
-  }
-  res.json(contact);
-});
+router.post("/", validate(addContactSchema), controlWrapper(ctrlContacts.add));
 
-router.put("/:contactId", async (req, res, next) => {
-  const id = req.params.contactId;
-  const body = req.query;
-  const { error } = updateContactSchema.validate({ id, ...body });
-  if (error) {
-    next(createError(400, "Bad request"));
-    return;
-  }
-  const contact = await updateContact(id, body);
-  res.json(contact);
-});
+router.delete("/:contactId", controlWrapper(ctrlContacts.removeById));
+
+router.put(
+  "/:contactId",
+  validate(updateContactSchema),
+  controlWrapper(ctrlContacts.updateById)
+);
 
 module.exports = router;
