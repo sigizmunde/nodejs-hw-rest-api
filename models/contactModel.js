@@ -10,9 +10,11 @@ const contactMongooseSchema = new Schema(
     },
     email: {
       type: String,
+      default: "",
     },
     phone: {
       type: String,
+      default: "",
     },
     favorite: {
       type: Boolean,
@@ -23,8 +25,6 @@ const contactMongooseSchema = new Schema(
 );
 
 contactMongooseSchema.post("save", handleSaveErrors);
-// this method added function after database operation 'save'
-// here we call helper function to correctly overdrive mongoose error on save
 
 const Contact = model("contacts", contactMongooseSchema);
 
@@ -33,15 +33,19 @@ const Joi = require("joi");
 
 const addContactSchema = Joi.object({
   name: Joi.string().required(),
-  email: Joi.string().email(),
-  phone: Joi.string().pattern(/^[+]?[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/),
+  email: Joi.string().email().allow(""),
+  phone: Joi.string()
+    .pattern(/^[+]?[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/)
+    .allow(""),
   favorite: Joi.boolean(),
 }).or("email", "phone");
 
 const updateContactSchema = Joi.object({
   name: Joi.string(),
-  email: Joi.string().email(),
-  phone: Joi.string().pattern(/^[+]?[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/),
+  email: Joi.string().email().allow(""),
+  phone: Joi.string()
+    .pattern(/^[+]?[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/)
+    .allow(""),
 }).or("name", "email", "phone");
 
 const favorContactSchema = Joi.object({
