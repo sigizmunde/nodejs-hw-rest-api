@@ -14,4 +14,6 @@ router.post(
   controlWrapper(ctrlUsers.register)
 );
 
+router.post("/login", validate(loginSchema), controlWrapper(ctrlUsers.login));
+
 module.exports = router;
