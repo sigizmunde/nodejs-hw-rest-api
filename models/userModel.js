@@ -3,7 +3,7 @@ const Joi = require("joi");
 
 const { handleSaveErrors } = require("../helpers");
 
-const emailRegexp = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+const emailRegexp = /^[a-z0-9]+@[a-z0-9]+\.[a-z]{2,3}$/;
 
 const userMongooseSchema = new Schema({
   password: {
@@ -33,9 +33,7 @@ const User = model("users", userMongooseSchema);
 const registerSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
-  subscription: Joi.string()
-    .validate(["starter", "pro", "business"])
-    .optional(),
+  subscription: Joi.string().valid("starter", "pro", "business").optional(),
 });
 
 const loginSchema = Joi.object({
