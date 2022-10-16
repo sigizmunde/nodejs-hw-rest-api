@@ -1,6 +1,6 @@
-const { joiSchemas } = require("../../models/contactModel");
+const { contactJoiSchemas } = require("../../models/contactModel");
 const { addContactSchema, updateContactSchema, favorContactSchema } =
-  joiSchemas;
+  contactJoiSchemas;
 
 const express = require("express");
 const router = express.Router();

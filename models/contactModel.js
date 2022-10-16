@@ -20,6 +20,10 @@ const contactMongooseSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: SchemaTypes.ObjectId,
+      ref: "user",
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -52,7 +56,7 @@ const favorContactSchema = Joi.object({
   favorite: Joi.boolean().required(),
 });
 
-const joiSchemas = {
+const contactJoiSchemas = {
   addContactSchema,
   updateContactSchema,
   favorContactSchema,
@@ -61,5 +65,5 @@ const joiSchemas = {
 
 module.exports = {
   Contact,
-  joiSchemas,
+  contactJoiSchemas,
 };
