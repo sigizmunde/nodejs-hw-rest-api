@@ -8,23 +8,39 @@ const router = express.Router();
 const ctrlContacts = require("../../controllers/contacts");
 const controlWrapper = require("../../helpers/controlWrapper");
 const validate = require("../../middleware/validate");
+const authenticateViaToken = require("../../middleware/authenticateViaToken");
 
-router.get("/", controlWrapper(ctrlContacts.getAll));
+router.get("/", authenticateViaToken, controlWrapper(ctrlContacts.getAll));
 
-router.get("/:contactId", controlWrapper(ctrlContacts.getById));
+router.get(
+  "/:contactId",
+  authenticateViaToken,
+  controlWrapper(ctrlContacts.getById)
+);
 
-router.post("/", validate(addContactSchema), controlWrapper(ctrlContacts.add));
+router.post(
+  "/",
+  authenticateViaToken,
+  validate(addContactSchema),
+  controlWrapper(ctrlContacts.add)
+);
 
-router.delete("/:contactId", controlWrapper(ctrlContacts.removeById));
+router.delete(
+  "/:contactId",
+  authenticateViaToken,
+  controlWrapper(ctrlContacts.removeById)
+);
 
 router.patch(
   "/:contactId/favorite",
+  authenticateViaToken,
   validate(favorContactSchema),
   controlWrapper(ctrlContacts.updateStatusContact)
 );
 
 router.put(
   "/:contactId",
+  authenticateViaToken,
   validate(updateContactSchema),
   controlWrapper(ctrlContacts.updateById)
 );
