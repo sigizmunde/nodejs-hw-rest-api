@@ -5,26 +5,29 @@ const { handleSaveErrors } = require("../helpers");
 
 const emailRegexp = /^[a-z0-9]+@[a-z0-9]+\.[a-z]{2,3}$/;
 
-const userMongooseSchema = new Schema({
-  password: {
-    type: String,
-    required: [true, "Password is required"],
+const userMongooseSchema = new Schema(
+  {
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+    },
+    subscription: {
+      type: String,
+      enum: ["starter", "pro", "business"],
+      default: "starter",
+    },
+    token: {
+      type: String,
+      default: null,
+    },
   },
-  email: {
-    type: String,
-    required: [true, "Email is required"],
-    unique: true,
-  },
-  subscription: {
-    type: String,
-    enum: ["starter", "pro", "business"],
-    default: "starter",
-  },
-  token: {
-    type: String,
-    default: null,
-  },
-});
+  { versionKey: false, timestamps: true }
+);
 
 userMongooseSchema.post("save", handleSaveErrors);
 
