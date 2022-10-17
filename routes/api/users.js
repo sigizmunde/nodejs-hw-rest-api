@@ -19,6 +19,10 @@ router.post("/login", validate(loginSchema), controlWrapper(ctrlUsers.login));
 
 router.get("/logout", authenticateViaToken, controlWrapper(ctrlUsers.logout));
 
-router.get("/current");
+router.get(
+  "/current",
+  authenticateViaToken,
+  controlWrapper(ctrlUsers.getCurrent)
+);
 
 module.exports = router;
