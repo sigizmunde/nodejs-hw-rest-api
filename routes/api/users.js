@@ -1,5 +1,5 @@
 const { userJoiSchemas } = require("../../models/userModel");
-const { registerSchema, loginSchema } = userJoiSchemas;
+const { registerSchema, loginSchema, subscriptionSchema } = userJoiSchemas;
 
 const express = require("express");
 const router = express.Router();
@@ -23,6 +23,13 @@ router.get(
   "/current",
   authenticateViaToken,
   controlWrapper(ctrlUsers.getCurrent)
+);
+
+router.patch(
+  "/",
+  authenticateViaToken,
+  validate(subscriptionSchema),
+  controlWrapper(ctrlUsers.setSubscription)
 );
 
 module.exports = router;
