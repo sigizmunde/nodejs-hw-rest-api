@@ -22,7 +22,7 @@ const contactMongooseSchema = new Schema(
     },
     owner: {
       type: SchemaTypes.ObjectId,
-      ref: "users",
+      ref: "user",
       required: true,
     },
   },
@@ -31,7 +31,7 @@ const contactMongooseSchema = new Schema(
 
 contactMongooseSchema.post("save", handleSaveErrors);
 
-const Contact = model("contacts", contactMongooseSchema);
+const Contact = model("contact", contactMongooseSchema);
 
 // ------------------------------- joi schemas start -------------------------------
 const Joi = require("joi");

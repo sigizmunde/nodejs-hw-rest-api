@@ -31,7 +31,7 @@ const userMongooseSchema = new Schema(
 
 userMongooseSchema.post("save", handleSaveErrors);
 
-const User = model("users", userMongooseSchema);
+const User = model("user", userMongooseSchema);
 
 const registerSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
