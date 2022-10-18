@@ -26,7 +26,7 @@ router.get(
 );
 
 router.patch(
-  "/",
+  "/subscription",
   authenticateViaToken,
   validate(subscriptionSchema),
   controlWrapper(ctrlUsers.setSubscription)
