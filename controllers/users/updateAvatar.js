@@ -7,7 +7,7 @@ const { createError } = require("../../helpers");
 
 const avatarsDir = path.join(__dirname, "../../", "public", "avatars");
 
-const updateAvatar = async (req, res) => {
+const updateAvatar = async (req, res, next) => {
   const { _id } = req.user;
   const { path: tempUpload, originalname } = req.file;
   const extention = originalname.split(".").pop();
@@ -16,7 +16,9 @@ const updateAvatar = async (req, res) => {
   await fs.rename(tempUpload, resultUpload);
   await Jimp.read(resultUpload)
     .then((image) => image.resize(250, 250).quality(60).write(resultUpload))
-    .catch((err) => !err.code ?? createError(415, "Unsupported media type"));
+    .catch(
+      (err) => !err.code ?? next(createError(415, "Unsupported media type"))
+    );
   const avatarURL = path.join("avatars", filename);
   await User.findByIdAndUpdate(_id, { avatarURL });
 
