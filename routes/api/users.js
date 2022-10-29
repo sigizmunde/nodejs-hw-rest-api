@@ -8,6 +8,7 @@ const ctrlUsers = require("../../controllers/users");
 const controlWrapper = require("../../helpers/controlWrapper");
 const validate = require("../../middleware/validate");
 const authenticateViaToken = require("../../middleware/authenticateViaToken");
+const uploadFile = require("../../middleware/uploadFile");
 
 router.post(
   "/signup",
@@ -30,6 +31,13 @@ router.patch(
   authenticateViaToken,
   validate(subscriptionSchema),
   controlWrapper(ctrlUsers.setSubscription)
+);
+
+router.patch(
+  "/avatars",
+  authenticateViaToken,
+  uploadFile.single("avatar"),
+  controlWrapper(ctrlUsers.updateAvatar)
 );
 
 module.exports = router;
