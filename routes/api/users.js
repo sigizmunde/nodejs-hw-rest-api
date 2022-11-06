@@ -42,4 +42,6 @@ router.patch(
 
 router.get("/verify/:verificationToken", controlWrapper(ctrlUsers.verifyUser));
 
+router.post("/verify/", controlWrapper(ctrlUsers.sendVerification));
+
 module.exports = router;

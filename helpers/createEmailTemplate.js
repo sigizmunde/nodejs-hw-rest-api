@@ -6,7 +6,7 @@ const createEmailTemplate = (email, verificationToken) => {
   return {
     to: email,
     subject: "Verify email",
-    html: `<div><p>Please, do not reply on this letter. This message is sent to you to verify your attempt to register on contact service.</p><p><a target="_blank" href="${link}">Click to verify your email</a></p><br/><p>${link}</p></div>`,
+    html: `<p>Please, do not reply on this letter. This message is sent to you to verify your attempt to register on contact service.</p><p><a target="_blank" href="${link}">Click to verify your email</a></p><br/><p>${link}</p>`,
   };
 };
 
