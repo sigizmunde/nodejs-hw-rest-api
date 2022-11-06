@@ -59,10 +59,15 @@ const subscriptionSchema = Joi.object({
   subscription: Joi.string().valid("starter", "pro", "business").required(),
 });
 
+const requestVerificationSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required(),
+});
+
 const userJoiSchemas = {
   registerSchema,
   loginSchema,
   subscriptionSchema,
+  requestVerificationSchema,
 };
 
 module.exports = {

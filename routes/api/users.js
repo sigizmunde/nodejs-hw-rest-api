@@ -1,5 +1,10 @@
 const { userJoiSchemas } = require("../../models/userModel");
-const { registerSchema, loginSchema, subscriptionSchema } = userJoiSchemas;
+const {
+  registerSchema,
+  loginSchema,
+  subscriptionSchema,
+  requestVerificationSchema,
+} = userJoiSchemas;
 
 const express = require("express");
 const router = express.Router();
@@ -42,6 +47,10 @@ router.patch(
 
 router.get("/verify/:verificationToken", controlWrapper(ctrlUsers.verifyUser));
 
-router.post("/verify/", controlWrapper(ctrlUsers.sendVerification));
+router.post(
+  "/verify/",
+  validate(requestVerificationSchema),
+  controlWrapper(ctrlUsers.sendVerification)
+);
 
 module.exports = router;
