@@ -5,9 +5,6 @@ const createEmailTemplate = require("../../helpers/createEmailTemplate");
 
 const sendVerification = async (req, res) => {
   const { email } = req.body;
-  if (!email) {
-    res.status(400).json({ message: "Missing required field email" });
-  }
   const user = await User.findOne({ email });
   if (!user) {
     res.status(400).json({ message: "No user with this email" });

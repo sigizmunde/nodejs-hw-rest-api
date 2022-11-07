@@ -48,7 +48,7 @@ router.patch(
 router.get("/verify/:verificationToken", controlWrapper(ctrlUsers.verifyUser));
 
 router.post(
-  "/verify/",
+  "/verify",
   validate(requestVerificationSchema),
   controlWrapper(ctrlUsers.sendVerification)
 );
